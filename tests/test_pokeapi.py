@@ -1,5 +1,7 @@
-import requests
 import pytest
+import requests
+from typing import Dict, Any
+from package.types import StatusCodeChecker, PokemonData
 
 
 @pytest.mark.parametrize(
@@ -10,16 +12,32 @@ import pytest
         (3, "venusaur"),
     ],
 )
-def test_get_pokemon_by_id(base_url, pokemon_id, expected_name):
-    response = requests.get(f"{base_url}pokemon/{pokemon_id}")
+def test_get_pokemon_by_id(
+    base_url: str,
+    pokemon_id: int,
+    expected_name: str,
+    check_status_code: StatusCodeChecker,
+) -> None:
+    response: requests.Response = requests.get(f"{base_url}pokemon/{pokemon_id}")
 
-    assert response.status_code == 200
-    assert response.json()["name"] == expected_name
+    check_status_code(response)
+
+    pokemon_data: PokemonData = response.json()
+    assert pokemon_data["name"] == expected_name
 
 
-def test_get_pokemon_by_name(base_url):
-    pokemon_name = "pikachu"
-    response = requests.get(f"{base_url}pokemon/{pokemon_name}")
+@pytest.mark.parametrize(
+    "pokemon_id, pokemon_name", [(25, "pikachu"), (132, "ditto"), (43, "oddish")]
+)
+def test_get_pokemon_by_name(
+    base_url: str,
+    pokemon_id: int,
+    pokemon_name: str,
+    check_status_code: StatusCodeChecker,
+) -> None:
+    response: requests.Response = requests.get(f"{base_url}pokemon/{pokemon_name}")
 
-    assert response.status_code == 200
-    assert response.json()["name"] == pokemon_name
+    check_status_code(response)
+
+    pokemon_data: PokemonData = response.json()
+    assert pokemon_data["id"] == pokemon_id

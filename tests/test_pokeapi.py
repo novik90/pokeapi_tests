@@ -13,12 +13,12 @@ from package.types import StatusCodeChecker, PokemonData
     ],
 )
 def test_get_pokemon_by_id(
-    base_url: str,
+    base_url_api: str,
     pokemon_id: int,
     expected_name: str,
     check_status_code: StatusCodeChecker,
 ) -> None:
-    response: requests.Response = requests.get(f"{base_url}pokemon/{pokemon_id}")
+    response: requests.Response = requests.get(f"{base_url_api}pokemon/{pokemon_id}")
 
     check_status_code(response)
 
@@ -30,12 +30,12 @@ def test_get_pokemon_by_id(
     "pokemon_id, pokemon_name", [(25, "pikachu"), (132, "ditto"), (43, "oddish")]
 )
 def test_get_pokemon_by_name(
-    base_url: str,
+    base_url_api: str,
     pokemon_id: int,
     pokemon_name: str,
     check_status_code: StatusCodeChecker,
 ) -> None:
-    response: requests.Response = requests.get(f"{base_url}pokemon/{pokemon_name}")
+    response: requests.Response = requests.get(f"{base_url_api}pokemon/{pokemon_name}")
 
     check_status_code(response)
 

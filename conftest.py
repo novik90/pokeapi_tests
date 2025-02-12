@@ -1,11 +1,17 @@
 import pytest
 import requests
+from playwright.sync_api import sync_playwright, Browser
 from package.types import StatusCodeChecker
 
 
 @pytest.fixture
 def base_url() -> str:
-    return "https://pokeapi.co/api/v2/"
+    return "https://pokeapi.co/"
+
+
+@pytest.fixture
+def base_url_api(base_url) -> str:
+    return f"{base_url}api/v2/"
 
 
 @pytest.fixture
@@ -18,3 +24,18 @@ def check_status_code() -> StatusCodeChecker:
         ), f"Ожидался код ответа {expected_code}, но получен {response.status_code}"
 
     return _check_status_code
+
+
+@pytest.fixture(scope="module")
+def browser():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        yield browser
+        browser.close()
+
+
+@pytest.fixture
+def page(browser: Browser):
+    page = browser.new_page()
+    yield page
+    page.close()

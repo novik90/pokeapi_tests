@@ -1,4 +1,6 @@
 import pytest
+from playwright.sync_api import Page
+from tests.playwright_tests.pages.home_page import HomePage
 
 
 @pytest.mark.UI

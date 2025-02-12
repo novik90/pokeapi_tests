@@ -27,12 +27,12 @@ def check_status_code() -> StatusCodeChecker:
     return _check_status_code
 
 
-@pytest.fixture(scope="module")
-def browser():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        yield browser
-        browser.close()
+# @pytest.fixture(scope="module")
+# def browser():
+#     with sync_playwright() as p:
+#         browser = p.chromium.launch()
+#         yield browser
+#         browser.close()
 
 
 @pytest.fixture

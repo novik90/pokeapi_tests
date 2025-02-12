@@ -1,15 +1,16 @@
 import pytest
 import requests
-from playwright.sync_api import sync_playwright, Browser
+from tests.playwright_tests.pages.home_page import HomePage
+from playwright.sync_api import sync_playwright, Browser, Page
 from package.types import StatusCodeChecker
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def base_url() -> str:
     return "https://pokeapi.co/"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def base_url_api(base_url) -> str:
     return f"{base_url}api/v2/"
 
@@ -39,3 +40,8 @@ def page(browser: Browser):
     page = browser.new_page()
     yield page
     page.close()
+
+
+@pytest.fixture
+def home_page(page: Page) -> HomePage:
+    return HomePage(page)

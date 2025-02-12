@@ -1,6 +1,5 @@
 import pytest
 import requests
-from typing import Dict, Any
 from package.types import StatusCodeChecker, PokemonData
 
 

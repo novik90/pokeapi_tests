@@ -7,7 +7,7 @@ class HomePage(BasePage):
         super().__init__(page)
         self.search_input = page.locator("#url-input")
 
-    def search_pokemon(self, name: str) -> None:
+    def search_pokemon_by_name(self, name: str) -> None:
         self.search_input.fill(name)
         self.search_input.press("Enter")
 

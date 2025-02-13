@@ -1,16 +1,13 @@
 import pytest
 import requests
 from requests import Response
+from tests.utils import pokemons_test_data as pokemons
 from package.types import StatusCodeChecker, PokemonData
 
 
 @pytest.mark.parametrize(
     "pokemon_id, expected_name",
-    [
-        (1, "bulbasaur"),
-        (2, "ivysaur"),
-        (3, "venusaur"),
-    ],
+    pokemons,
 )
 def test_get_pokemon_by_id(
     base_url_api: str,
@@ -28,11 +25,7 @@ def test_get_pokemon_by_id(
 
 @pytest.mark.parametrize(
     "pokemon_id, pokemon_name",
-    [
-        (25, "pikachu"),
-        (132, "ditto"),
-        (43, "oddish"),
-    ],
+    pokemons,
 )
 def test_get_pokemon_by_name(
     base_url_api: str,
